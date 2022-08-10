@@ -16,10 +16,10 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 else 
 #(pv -n $1 | dd of=$2 bs=1M conv=notrunc,noerror) 2>&1 | dialog --gauge "Running dd command (cloning), please wait..." 10 70 0
-
-(pv -n $1 | dd of=$2 conv=notrunc,noerror) 2>&1 | dialog --gauge "Running dd command (cloning), please wait..." 10 70 0
+(pv -n $1 | dd of=$2 bs=64k conv=notrunc,noerror) 2>&1 | dialog --gauge "Running dd command (cloning), please wait..." 10 70 0
 fi
 
+clear
 #/home/beny/Downloads/Fedora-Workstation-Live-x86_64-36-1.5.iso
 #/dev/sdb
 
