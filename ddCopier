@@ -22,10 +22,16 @@ then
     fi
 fi
 done
+array=(4M 64k default)
+var=$(dialog --radiolist "Selecciona la velocidad de bloque:" 10 40 3 \
+ 1 "bs=4M (recomendada)" on \
+ 2 "bs=64K" off \
+ 3 "default" off 3>&1 1>&2 2>&3 3>&- )
+bs="bs=${array[var - 1]}"
+dialog --msgbox "Escogiste $bs" 10 70
 exit
-
 #(pv -n $1 | dd of=$2 bs=1M conv=notrunc,noerror) 2>&1 | dialog --gauge "Running dd command (cloning), please wait..." 10 70 0
-(pv -n $1 | dd of=$2 bs=4M ) 2>&1 | dialog --gauge "Clonando Dentro de unidad: $2, por favor espere..." 10 70 0
+(pv -n $1 | dd of=$2 $bs ) 2>&1 | dialog --gauge "Clonando Dentro de unidad: $2, por favor espere..." 10 70 0
 #pv -tpreb $1 | dd of=$2 bs=1024k
 #dd if=$1 of=$2 bs=1024k status=progress
 dialog --msgbox "Clonado Finalizado" 10 70
