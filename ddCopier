@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if ! command -v pv &> /dev/null
+then
+    echo "pv could not be found please install it"
+    exit
+fi
+if ! command -v dialog &> /dev/null
+then
+    echo "dialog could not be found please install it"
+    exit
+fi
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+else 
+#(pv -n $1 | dd of=$2 bs=1M conv=notrunc,noerror) 2>&1 | dialog --gauge "Running dd command (cloning), please wait..." 10 70 0
+
+(pv -n $1 | dd of=$2 conv=notrunc,noerror) 2>&1 | dialog --gauge "Running dd command (cloning), please wait..." 10 70 0
+fi
+
+#/home/beny/Downloads/Fedora-Workstation-Live-x86_64-36-1.5.iso
+#/dev/sdb
+
